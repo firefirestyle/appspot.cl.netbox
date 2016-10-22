@@ -1,0 +1,9 @@
+name: firefirestyle.cl.netbox
+description: web client
+version: 0.0.1
+dependencies:
+ firefirestyle.httprequest:
+   path: ../dart.httprequest
+ firefirestyle.miniprop:
+   git:
+     url: https://github.com/firefirestyle/dart.miniprop.git

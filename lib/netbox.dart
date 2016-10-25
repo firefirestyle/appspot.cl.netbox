@@ -104,12 +104,18 @@ class UserInfoProp {
   String get privateInfo => prop.getString("PrivateInfo", "");
 }
 
+class UserKeyListProp {
+  prop.MiniProp prop;
+  UserKeyListProp(this.prop) {}
+  List<String> get keys => this.prop.getPropStringList(null, "keys", []);
+}
+
 class UserNBox {
+  req.NetBuilder builder;
   String backAddr;
-  UserNBox(this.backAddr) {}
+  UserNBox(this.builder, this.backAddr) {}
   //
-  Future<UserInfoProp> requestUserInfo(String userName) async {
-    var builder = new req.Html5NetBuilder();
+  Future<UserInfoProp> getUserInfo(String userName) async {
     var requester = await builder.createRequester();
     var url = "${backAddr}/api/v1/user/get?userName=${Uri.encodeComponent(userName)}";
     req.Response response = await requester.request(req.Requester.TYPE_GET, url);
@@ -117,5 +123,25 @@ class UserNBox {
       throw new Exception("");
     }
     return new UserInfoProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+  }
+
+  Future<UserInfoProp> getUserInfoFromKey(String key) async {
+    var requester = await builder.createRequester();
+    var url = "${backAddr}/api/v1/user/get?key=${Uri.encodeComponent(key)}";
+    req.Response response = await requester.request(req.Requester.TYPE_GET, url);
+    if (response.status != 200) {
+      throw new Exception("");
+    }
+    return new UserInfoProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+  }
+
+  Future<UserKeyListProp> findUser(String cursor) async {
+    var url = "${backAddr}/api/v1/user/find";
+    var requester = await builder.createRequester();
+    req.Response response = await requester.request(req.Requester.TYPE_GET, url);
+    if (response.status != 200) {
+      throw new Exception("");
+    }
+    return new UserKeyListProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 }

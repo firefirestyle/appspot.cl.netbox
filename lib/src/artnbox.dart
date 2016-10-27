@@ -49,9 +49,21 @@ class ArtNBox {
   ArtNBox(this.builder, this.backAddr) {}
   //
 
-  Future<ArtInfoProp> getArt(String stringId) async {
+  Future<ArtInfoProp> getArtFromStringId(String stringId) async {
     var requester = await builder.createRequester();
     var url = ["""${backAddr}/api/v1/art/get""","?key="+Uri.encodeComponent(stringId)].join();
+    req.Response response = await requester.request(req.Requester.TYPE_POST, url);
+    if (response.status != 200) {
+      throw new ErrorProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+    }
+    return new ArtInfoProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+  }
+
+  Future<ArtInfoProp> getArtFromArticleId(String articleId, String sign) async {
+    var requester = await builder.createRequester();
+    var url = ["""${backAddr}/api/v1/art/get""",//
+    """?articleId=${Uri.encodeComponent(articleId)}""",
+    """&sign=${Uri.encodeComponent(sign)}"""].join();
     req.Response response = await requester.request(req.Requester.TYPE_POST, url);
     if (response.status != 200) {
       throw new ErrorProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));

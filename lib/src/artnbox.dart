@@ -14,9 +14,36 @@ class NewArtProp {
 class ArtInfoProp {
   prop.MiniProp prop;
   ArtInfoProp(this.prop) {}
+  String get projectId => prop.getString(ArtNBox.TypeProjectId, "");
+  String get userName =>  prop.getString(ArtNBox.TypeUserName, "");
+  String get title => prop.getString(ArtNBox.TypeTitle, "");
+  String get tag => prop.getString(ArtNBox.TypeTag, "");
+  String get cont => prop.getString(ArtNBox.TypeCont, "");
+  String get info => prop.getString(ArtNBox.TypeInfo, "");
+  String get type => prop.getString(ArtNBox.TypeType, "");
+  String get sign => prop.getString(ArtNBox.TypeSign, "");
+  String get articleId => prop.getString(ArtNBox.TypeArticleId, "");
+  num get created => prop.getNum(ArtNBox.TypeCreated, 0);
+  num get updated => prop.getNum(ArtNBox.TypeUpdated , 0);
+  String get secretKey => prop.getString(ArtNBox.TypeSecretKey, "");
+  String get target => prop.getString(ArtNBox.TypeTarget, "");
 }
 
 class ArtNBox {
+  static final String TypeProjectId = "ProjectId";
+  static final String TypeUserName  = "UserName";
+  static final String TypeTitle     = "Title";
+  static final String TypeTag       = "Tag";
+  static final String TypeCont      = "Cont";
+  static final String TypeInfo      = "Info";
+  static final String TypeType      = "Type";
+  static final String TypeSign      = "Sign";
+  static final String TypeArticleId = "ArticleId";
+  static final String TypeCreated   = "Created";
+  static final String TypeUpdated   = "Updated";
+  static final String TypeSecretKey = "SecretKey";
+  static final String TypeTarget    = "Target";
+
   req.NetBuilder builder;
   String backAddr;
   ArtNBox(this.builder, this.backAddr) {}
@@ -45,6 +72,7 @@ class ArtNBox {
     }
     return new NewArtProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
+
   Future<ArtKeyListProp> findArticle(String cursor) async {
     var url = "${backAddr}/api/v1/art/find";
     var requester = await builder.createRequester();

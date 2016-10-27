@@ -110,6 +110,35 @@ class UserKeyListProp {
   List<String> get keys => this.prop.getPropStringList(null, "keys", []);
 }
 
+//
+// /api/v1/art/new
+
+class NewArtProp {
+  prop.MiniProp prop;
+  NewArtProp(this.prop) {}
+}
+
+class ArtNBox {
+  req.NetBuilder builder;
+  String backAddr;
+  ArtNBox(this.builder, this.backAddr) {}
+  //
+  Future<NewArtProp> newArt(String userName,{String title:""}) async {
+    var requester = await builder.createRequester();
+    var url = ["""${backAddr}/api/v1/art/new""",
+    """?ownerName=${Uri.encodeComponent(userName)}"""
+    """&title=${title}"""].join();
+    req.Response response = await requester.request(req.Requester.TYPE_GET, url);
+    if (response.status != 200) {
+      throw new Exception("");
+    }
+    return new NewArtProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+  }
+
+}
+
+//
+//
 class UserNBox {
   req.NetBuilder builder;
   String backAddr;

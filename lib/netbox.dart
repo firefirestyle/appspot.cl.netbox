@@ -113,6 +113,14 @@ class UserKeyListProp {
 //
 // /api/v1/art/new
 
+class ErrorProp {
+  prop.MiniProp prop;
+  ErrorProp(this.prop) {}
+  //"errorCode"
+  //"errorMessage"
+  int get errorCode => prop.getNum("errorCode", 0);
+  String get errorMessage => prop.getString("errorMessage", "");
+}
 class NewArtProp {
   prop.MiniProp prop;
   NewArtProp(this.prop) {}
@@ -123,14 +131,16 @@ class ArtNBox {
   String backAddr;
   ArtNBox(this.builder, this.backAddr) {}
   //
-  Future<NewArtProp> newArt(String userName,{String title:""}) async {
+  Future<NewArtProp> newArt(String userName,{String title:"", String cont:""}) async {
     var requester = await builder.createRequester();
-    var url = ["""${backAddr}/api/v1/art/new""",
-    """?ownerName=${Uri.encodeComponent(userName)}"""
-    """&title=${title}"""].join();
-    req.Response response = await requester.request(req.Requester.TYPE_GET, url);
+    var url = ["""${backAddr}/api/v1/art/new"""].join();
+    var inputData = new prop.MiniProp();
+    inputData.setString("ownerName", userName);
+    inputData.setString("title", title);
+    inputData.setString("content", cont);
+    req.Response response = await requester.request(req.Requester.TYPE_POST, url,data: inputData.toJson());
     if (response.status != 200) {
-      throw new Exception("");
+      throw new ErrorProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
     }
     return new NewArtProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }

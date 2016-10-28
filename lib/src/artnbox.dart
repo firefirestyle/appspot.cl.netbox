@@ -91,6 +91,20 @@ class ArtNBox {
     return new NewArtProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
+  Future<NewArtProp> updateArt(String articleId, {String title: "", String cont: ""}) async {
+    var requester = await builder.createRequester();
+    var url = ["""${backAddr}/api/v1/art/update"""].join();
+    var inputData = new prop.MiniProp();
+    inputData.setString("articleId", articleId);
+    inputData.setString("title", title);
+    inputData.setString("content", cont);
+    req.Response response = await requester.request(req.Requester.TYPE_POST, url, data: inputData.toJson());
+    if (response.status != 200) {
+      throw new ErrorProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+    }
+    return new NewArtProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+  }
+
   Future<ArtKeyListProp> findArticle(String cursor) async {
     var url = "${backAddr}/api/v1/art/find";
     var requester = await builder.createRequester();

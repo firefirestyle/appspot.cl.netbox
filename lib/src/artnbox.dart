@@ -114,4 +114,36 @@ class ArtNBox {
     }
     return new ArtKeyListProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
+
+  ///api/v1/art/requestbloburl
+  Future<UploadFileProp> updateFile(String accessToken, String articleId, String dir, String name, typed.Uint8List data) async {
+    String url = [
+      backAddr, //
+      """/api/v1/art/requestbloburl""", //
+      """?articleId=${Uri.encodeComponent(articleId)}""",//
+      """&dir=${Uri.encodeComponent(dir)}""",//
+      """&file=${Uri.encodeComponent(name)}"""
+    ].join("");
+
+    var uelPropObj = new prop.MiniProp();
+    uelPropObj.setString("token", accessToken);
+    req.Response response = await (await builder.createRequester()).request(req.Requester.TYPE_POST, url, data: uelPropObj.toJson(errorIsThrow: false));
+    if (response.status != 200) {
+      throw "failed to get request token";
+    }
+    var responsePropObj = new prop.MiniProp.fromByte(response.response.asUint8List());
+    var tokenUrl = responsePropObj.getString("token", "");
+
+    print(""" TokenUrl = ${tokenUrl} """);
+    req.Multipart multipartObj = new req.Multipart();
+    var responseFromUploaded = await multipartObj.post(await builder.createRequester(), tokenUrl, [
+      new req.MultipartItem.fromList("file", "blob", "image/png", data) //
+    ]);
+    if (responseFromUploaded.status != 200) {
+      throw "failed to uploaded";
+    }
+
+    return new UploadFileProp(new prop.MiniProp.fromByte(responseFromUploaded.response.asUint8List(), errorIsThrow: false));
+    
+  }
 }

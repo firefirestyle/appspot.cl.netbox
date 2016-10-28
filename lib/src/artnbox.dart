@@ -17,7 +17,7 @@ class ArtInfoProp {
   String get projectId => prop.getString(ArtNBox.TypeProjectId, "");
   String get userName => prop.getString(ArtNBox.TypeUserName, "");
   String get title => prop.getString(ArtNBox.TypeTitle, "");
-  String get tag => prop.getString(ArtNBox.TypeTag, "");
+  List<String> get tags => prop.getPropStringList(null,ArtNBox.TypeTag, []);
   String get cont => prop.getString(ArtNBox.TypeCont, "");
   String get info => prop.getString(ArtNBox.TypeInfo, "");
   String get type => prop.getString(ArtNBox.TypeType, "");
@@ -91,13 +91,14 @@ class ArtNBox {
     return new NewArtProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
-  Future<NewArtProp> updateArt(String articleId, {String title: "", String cont: ""}) async {
+  Future<NewArtProp> updateArt(String articleId, {String title: "", String cont: "", List<String> tags}) async {
     var requester = await builder.createRequester();
     var url = ["""${backAddr}/api/v1/art/update"""].join();
     var inputData = new prop.MiniProp();
     inputData.setString("articleId", articleId);
     inputData.setString("title", title);
     inputData.setString("content", cont);
+    inputData.setPropStringList(null, "tags", tags);
     req.Response response = await requester.request(req.Requester.TYPE_POST, url, data: inputData.toJson());
     if (response.status != 200) {
       throw new ErrorProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
@@ -144,6 +145,6 @@ class ArtNBox {
     }
 
     return new UploadFileProp(new prop.MiniProp.fromByte(responseFromUploaded.response.asUint8List(), errorIsThrow: false));
-    
+
   }
 }

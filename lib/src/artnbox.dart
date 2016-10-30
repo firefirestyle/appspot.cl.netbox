@@ -27,6 +27,7 @@ class ArtInfoProp {
   num get updated => prop.getNum(ArtNBox.TypeUpdated, 0);
   String get secretKey => prop.getString(ArtNBox.TypeSecretKey, "");
   String get target => prop.getString(ArtNBox.TypeTarget, "");
+    String get iconUrl => prop.getString("IconUrl", "");
 }
 
 class ArtNBox {
@@ -51,6 +52,10 @@ class ArtNBox {
   String backAddr;
   ArtNBox(this.builder, this.backAddr) {}
   //
+
+  Future<String> getFromKey(String key) async {
+    return "${backAddr}/api/v1/art/getblob?key=${Uri.encodeComponent(key)}";
+  }
 
   Future<ArtInfoProp> getArtFromStringId(String stringId) async {
     var requester = await builder.createRequester();

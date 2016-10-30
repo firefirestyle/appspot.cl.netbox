@@ -19,7 +19,7 @@ class UserInfoProp {
   int get logined => prop.getNum("Logined", 0);
   String get state => prop.getString("State", "");
   int get point => prop.getNum("Point", 0);
-  String get iconUr => prop.getString("IconUrl", "");
+  String get iconUrl => prop.getString("IconUrl", "");
   String get publicInfo => prop.getString("PublicInfo", "");
   String get privateInfo => prop.getString("PrivateInfo", "");
 }

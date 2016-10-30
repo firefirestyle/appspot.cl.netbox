@@ -5,7 +5,6 @@ class LogoutProp {
   LogoutProp(this.prop) {}
 }
 
-
 class MeNBox {
   req.NetBuilder builder;
   String backAddr;
@@ -29,7 +28,7 @@ class MeNBox {
   }
 
   Future<UploadFileProp> updateIcon(String accessToken, String userName, typed.Uint8List data) async {
-    return updateFile(accessToken, userName,  "", "meicon", data);
+    return updateFile(accessToken, userName, "", "meicon", data);
   }
 
   //
@@ -38,14 +37,14 @@ class MeNBox {
   Future<UploadFileProp> updateFile(String accessToken, String userName, String dir, String name, typed.Uint8List data) async {
     String url = [
       backAddr, //
-      """/api/v1/user/requestbloburl""", //
-      """?userName=${Uri.encodeComponent(userName)}""", //
-      """&dir=${Uri.encodeComponent(dir)}""",
-      """&file=${Uri.encodeComponent(name)}"""
+      """/api/v1/user/requestbloburl"""
     ].join("");
 
     var uelPropObj = new prop.MiniProp();
     uelPropObj.setString("token", accessToken);
+    uelPropObj.setString("userName", userName);
+    uelPropObj.setString("dir", dir);
+    uelPropObj.setString("file", name);
     req.Response response = await (await builder.createRequester()).request(req.Requester.TYPE_POST, url, data: uelPropObj.toJson(errorIsThrow: false));
     if (response.status != 200) {
       throw "failed to get request token";

@@ -17,7 +17,7 @@ class ArtInfoProp {
   String get projectId => prop.getString(ArtNBox.TypeProjectId, "");
   String get userName => prop.getString(ArtNBox.TypeUserName, "");
   String get title => prop.getString(ArtNBox.TypeTitle, "");
-  List<String> get tags => prop.getPropStringList(null,ArtNBox.TypeTag, []);
+  List<String> get tags => prop.getPropStringList(null, ArtNBox.TypeTag, []);
   String get cont => prop.getString(ArtNBox.TypeCont, "");
   String get info => prop.getString(ArtNBox.TypeInfo, "");
   String get type => prop.getString(ArtNBox.TypeType, "");
@@ -27,7 +27,7 @@ class ArtInfoProp {
   num get updated => prop.getNum(ArtNBox.TypeUpdated, 0);
   String get secretKey => prop.getString(ArtNBox.TypeSecretKey, "");
   String get target => prop.getString(ArtNBox.TypeTarget, "");
-    String get iconUrl => prop.getString("IconUrl", "");
+  String get iconUrl => prop.getString("IconUrl", "");
 }
 
 class ArtNBox {
@@ -126,8 +126,8 @@ class ArtNBox {
     String url = [
       backAddr, //
       """/api/v1/art/requestbloburl""", //
-      """?articleId=${Uri.encodeComponent(articleId)}""",//
-      """&dir=${Uri.encodeComponent(dir)}""",//
+      """?articleId=${Uri.encodeComponent(articleId)}""", //
+      """&dir=${Uri.encodeComponent(dir)}""", //
       """&file=${Uri.encodeComponent(name)}"""
     ].join("");
 
@@ -150,6 +150,7 @@ class ArtNBox {
     }
 
     return new UploadFileProp(new prop.MiniProp.fromByte(responseFromUploaded.response.asUint8List(), errorIsThrow: false));
-
   }
+
+
 }

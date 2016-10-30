@@ -29,6 +29,9 @@ class UserNBox {
   req.NetBuilder builder;
   String backAddr;
   UserNBox(this.builder, this.backAddr) {}
+  Future<String> getUserBlobFromKey(String key) async {
+    return "${backAddr}/api/v1/user/getblob?key=${Uri.encodeComponent(key)}";
+  }
   //
   Future<UserInfoProp> getUserInfo(String userName) async {
     var requester = await builder.createRequester();

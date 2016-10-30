@@ -82,13 +82,14 @@ class ArtNBox {
     return new ArtInfoProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
-  Future<NewArtProp> newArt(String userName, {String title: "", String cont: ""}) async {
+  Future<NewArtProp> newArt(String accessToken, {String title: "", String cont: ""}) async {
     var requester = await builder.createRequester();
     var url = ["""${backAddr}/api/v1/art/new"""].join();
     var inputData = new prop.MiniProp();
-    inputData.setString("ownerName", userName);
     inputData.setString("title", title);
     inputData.setString("content", cont);
+    inputData.setString("token", accessToken);
+
     req.Response response = await requester.request(req.Requester.TYPE_POST, url, data: inputData.toJson());
     if (response.status != 200) {
       throw new ErrorProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
@@ -96,13 +97,14 @@ class ArtNBox {
     return new NewArtProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
-  Future<NewArtProp> updateArt(String articleId, {String title: "", String cont: "", List<String> tags}) async {
+  Future<NewArtProp> updateArt(String accessToken, String articleId, {String title: "", String cont: "", List<String> tags}) async {
     var requester = await builder.createRequester();
     var url = ["""${backAddr}/api/v1/art/update"""].join();
     var inputData = new prop.MiniProp();
     inputData.setString("articleId", articleId);
     inputData.setString("title", title);
     inputData.setString("content", cont);
+    inputData.setString("token", accessToken);
     inputData.setPropStringList(null, "tags", tags);
     req.Response response = await requester.request(req.Requester.TYPE_POST, url, data: inputData.toJson());
     if (response.status != 200) {
@@ -151,6 +153,4 @@ class ArtNBox {
 
     return new UploadFileProp(new prop.MiniProp.fromByte(responseFromUploaded.response.asUint8List(), errorIsThrow: false));
   }
-
-
 }

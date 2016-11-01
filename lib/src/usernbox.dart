@@ -31,7 +31,8 @@ class UserNBox {
   req.NetBuilder builder;
   String backAddr;
   UserNBox(this.builder, this.backAddr) {}
-  Future<String> getUserBlobFromKey(String key) async {
+  Future<String> makeUserBlobUrlFromKey(String key) async {
+    key = key.replaceAll("key://", "");
     return "${backAddr}/api/v1/user/getblob?key=${Uri.encodeComponent(key)}";
   }
   //

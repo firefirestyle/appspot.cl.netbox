@@ -17,6 +17,23 @@ class MeNBox {
   String makeLoginFacebookUrl(String callbackAddr) {
     return """${backAddr}/api/v1/facebook/tokenurl/redirect?${callbackopt}=${Uri.encodeComponent(callbackAddr)}""";
   }
+  //""
+
+  Future<UserInfoProp> updateUserInfo(String accessToken, String userName, {String displayName: "", String cont: "", List<String> tags}) async {
+    var requester = await builder.createRequester();
+    var url = ["""${backAddr}/api/v1/me/update"""].join();
+    var inputData = new prop.MiniProp();
+    inputData.setString("token", accessToken);
+    inputData.setString("userName", userName);
+    inputData.setString("displayName", displayName);
+    inputData.setString("content", cont);
+    inputData.setPropStringList(null, "tags", tags);
+    req.Response response = await requester.request(req.Requester.TYPE_POST, url, data: inputData.toJson());
+    if (response.status != 200) {
+      throw new ErrorProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+    }
+    return new UserInfoProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+  }
 
   Future<LogoutProp> logout(String token) async {
     var requester = await builder.createRequester();

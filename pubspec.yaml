@@ -3,7 +3,8 @@ description: web client
 version: 0.0.1
 dependencies:
  firefirestyle.httprequest:
-   path: ../dart.httprequest
+    git:
+      url: https://github.com/firefirestyle/dart.httprequest.git
  firefirestyle.miniprop:
    git:
      url: https://github.com/firefirestyle/dart.miniprop.git

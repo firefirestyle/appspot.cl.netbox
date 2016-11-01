@@ -22,6 +22,8 @@ class UserInfoProp {
   String get iconUrl => prop.getString("IconUrl", "");
   String get publicInfo => prop.getString("PublicInfo", "");
   String get privateInfo => prop.getString("PrivateInfo", "");
+  String get sign => prop.getString("Sign", "");
+  String get content => prop.getString("Cont", "");
 }
 
 

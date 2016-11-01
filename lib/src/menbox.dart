@@ -14,6 +14,10 @@ class MeNBox {
     return """${backAddr}/api/v1/twitter/tokenurl/redirect?${callbackopt}=${Uri.encodeComponent(callbackAddr)}""";
   }
 
+  String makeLoginFacebookUrl(String callbackAddr) {
+    return """${backAddr}/api/v1/facebook/tokenurl/redirect?${callbackopt}=${Uri.encodeComponent(callbackAddr)}""";
+  }
+
   Future<LogoutProp> logout(String token) async {
     var requester = await builder.createRequester();
     var url = "${backAddr}/api/v1/me/logout";

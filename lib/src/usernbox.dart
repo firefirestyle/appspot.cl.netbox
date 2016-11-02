@@ -28,6 +28,8 @@ class UserInfoProp {
 
 
 class UserNBox {
+  static const String modeNewOwder = "";
+  static const String modeMPoint = "-point";
   req.NetBuilder builder;
   String backAddr;
   UserNBox(this.builder, this.backAddr) {}
@@ -56,8 +58,8 @@ class UserNBox {
     return new UserInfoProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
-  Future<UserKeyListProp> findUser(String cursor) async {
-    var url = "${backAddr}/api/v1/user/find";
+  Future<UserKeyListProp> findUser(String cursor,{String group:"",String mode:""}) async {
+    var url = "${backAddr}/api/v1/user/find?mode=${Uri.encodeComponent(mode)}&group=${Uri.encodeComponent(group)}";
     var requester = await builder.createRequester();
     req.Response response = await requester.request(req.Requester.TYPE_GET, url);
     if (response.status != 200) {

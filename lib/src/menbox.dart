@@ -10,6 +10,7 @@ class MeNBox {
   String backAddr;
   String callbackopt = "cb";
   MeNBox(this.builder, this.backAddr) {}
+
   String makeLoginTwitterUrl(String callbackAddr) {
     return """${backAddr}/api/v1/twitter/tokenurl/redirect?${callbackopt}=${Uri.encodeComponent(callbackAddr)}""";
   }
@@ -17,7 +18,18 @@ class MeNBox {
   String makeLoginFacebookUrl(String callbackAddr) {
     return """${backAddr}/api/v1/facebook/tokenurl/redirect?${callbackopt}=${Uri.encodeComponent(callbackAddr)}""";
   }
-  //""
+
+  Future<UserInfoProp> getMeInfo(String accessToken) async {
+    var requester = await builder.createRequester();
+    var url = "${backAddr}/api/v1/me/get";
+    var inputData = new prop.MiniProp();
+    inputData.setString("token", accessToken);
+    req.Response response = await requester.request(req.Requester.TYPE_POST, url, data: inputData.toJson(errorIsThrow: false));
+    if (response.status != 200) {
+      throw new Exception("");
+    }
+    return new UserInfoProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+  }
 
   Future<UserInfoProp> updateUserInfo(String accessToken, String userName, {String displayName: "", String cont: "", List<String> tags}) async {
     var requester = await builder.createRequester();

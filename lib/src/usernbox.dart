@@ -34,12 +34,15 @@ class UserNBox {
   req.NetBuilder builder;
   String backAddr;
   UserNBox(this.builder, this.backAddr) {}
+
   Future<String> makeUserBlobFromKey(String key) async {
     return makeUserBlob(key);
   }
+
   Future<String> makeUserBlobPath(String useName, String dir, String file, {String sign: ""}) async {
     return makeUserBlob("",useName: useName,dir:dir,file: file,sign: sign);
   }
+
   Future<String> makeUserBlob(String key, {String useName: "", String dir: "", String file: "", String sign: ""}) async {
     key = key.replaceAll("key://", "");
     return [

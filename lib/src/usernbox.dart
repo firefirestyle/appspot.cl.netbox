@@ -7,6 +7,8 @@ class UserKeyListProp {
   prop.MiniProp prop;
   UserKeyListProp(this.prop) {}
   List<String> get keys => this.prop.getPropStringList(null, "keys", []);
+  String get cursorOne => this.prop.getString("cursorOne", "");
+  String get cursorNext => this.prop.getString("cursorNext", "");
 }
 
 class UserInfoProp {

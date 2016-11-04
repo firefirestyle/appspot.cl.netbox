@@ -60,14 +60,14 @@ class MeNBox {
     return new LogoutProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
-  Future<UploadFileProp> updateIcon(String accessToken, String userName, typed.Uint8List data) async {
-    return updateFile(accessToken, userName, "", "meicon", data);
+  Future<UploadFileProp> updateIcon(String accessToken, typed.Uint8List data) async {
+    return updateFile(accessToken, "", "meicon", data);
   }
 
   //
   //
   //
-  Future<UploadFileProp> updateFile(String accessToken, String userName, String dir, String name, typed.Uint8List data) async {
+  Future<UploadFileProp> updateFile(String accessToken, String dir, String name, typed.Uint8List data, {String userName: ""}) async {
     String url = [
       backAddr, //
       """/api/v1/user/requestbloburl"""

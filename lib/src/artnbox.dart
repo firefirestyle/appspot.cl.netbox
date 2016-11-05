@@ -4,6 +4,8 @@ class ArtKeyListProp {
   prop.MiniProp prop;
   ArtKeyListProp(this.prop) {}
   List<String> get keys => this.prop.getPropStringList(null, "keys", []);
+  String get cursorOne => this.prop.getPropString(null, "cursorOne", "");
+  String get cursorNext => this.prop.getPropString(null, "cursorNext", "");
 }
 
 class NewArtProp {

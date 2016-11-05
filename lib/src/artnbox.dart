@@ -11,7 +11,8 @@ class ArtKeyListProp {
 class NewArtProp {
   prop.MiniProp prop;
   NewArtProp(this.prop) {}
-}
+  String get articleId => this.prop.getString("articleId", "");
+ }
 
 class ArtInfoProp {
   prop.MiniProp prop;

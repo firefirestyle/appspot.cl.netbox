@@ -126,7 +126,19 @@ class ArtNBox {
     }
     return new ArtKeyListProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
-
+  //UrlArtFindMe
+  Future<ArtKeyListProp> findMeArticle(String token, String cursor,{String  target:""}) async {
+    var url = "${backAddr}/api/v1/art/find/me";
+    var propObj = new prop.MiniProp();
+    propObj.setString("token", token);
+    propObj.setString("target", target);
+    var requester = await builder.createRequester();
+    req.Response response = await requester.request(req.Requester.TYPE_POST, url,data: propObj.toJson());
+    if (response.status != 200) {
+      throw new Exception("");
+    }
+    return new ArtKeyListProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+  }
   ///api/v1/art/requestbloburl
   Future<UploadFileProp> updateFile(String accessToken, String articleId, String dir, String name, typed.Uint8List data) async {
     String url = [

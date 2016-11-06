@@ -140,6 +140,20 @@ class ArtNBox {
     }
     return new ArtKeyListProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
+
+  Future<ArtKeyListProp> deleteArticleWithToken(String token, String articleId) async {
+    var url = "${backAddr}/api/v1/art/delete";
+    var propObj = new prop.MiniProp();
+    propObj.setString("token", token);
+    propObj.setString("articleId",articleId);
+    var requester = await builder.createRequester();
+    req.Response response = await requester.request(req.Requester.TYPE_POST, url,data: propObj.toJson());
+    if (response.status != 200) {
+      throw new Exception("");
+    }
+    return new ArtKeyListProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+  }
+
   ///api/v1/art/requestbloburl
   Future<UploadFileProp> updateFile(String accessToken, String articleId, String dir, String name, typed.Uint8List data) async {
     String url = [

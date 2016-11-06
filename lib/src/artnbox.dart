@@ -56,7 +56,7 @@ class ArtNBox {
   ArtNBox(this.builder, this.backAddr) {}
   //
 
-  Future<String> getFromKey(String key) async {
+  Future<String> makeBlobUrlFromKey(String key) async {
     return "${backAddr}/api/v1/art/getblob?key=${Uri.encodeComponent(key)}";
   }
 

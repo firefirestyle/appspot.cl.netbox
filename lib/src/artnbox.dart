@@ -127,11 +127,12 @@ class ArtNBox {
     return new ArtKeyListProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
   //UrlArtFindMe
-  Future<ArtKeyListProp> findMeArticle(String token, String cursor,{String  target:""}) async {
-    var url = "${backAddr}/api/v1/art/find/me";
+  Future<ArtKeyListProp> findArticleWithToken(String token, String cursor,{String userName:"", String  target:""}) async {
+    var url = "${backAddr}/api/v1/art/find_with_token";
     var propObj = new prop.MiniProp();
     propObj.setString("token", token);
     propObj.setString("target", target);
+    propObj.setString("userName", userName);
     var requester = await builder.createRequester();
     req.Response response = await requester.request(req.Requester.TYPE_POST, url,data: propObj.toJson());
     if (response.status != 200) {

@@ -117,8 +117,8 @@ class ArtNBox {
     return new NewArtProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
-  Future<ArtKeyListProp> findArticle(String cursor,{String userName:""}) async {
-    var url = "${backAddr}/api/v1/art/find?userName=${Uri.encodeComponent(userName)}";
+  Future<ArtKeyListProp> findArticle(String cursor,{String userName:"",String  target:""}) async {
+    var url = "${backAddr}/api/v1/art/find?userName=${Uri.encodeComponent(userName)}&?target=${Uri.encodeComponent(target)}";
     var requester = await builder.createRequester();
     req.Response response = await requester.request(req.Requester.TYPE_GET, url);
     if (response.status != 200) {

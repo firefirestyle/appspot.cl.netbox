@@ -55,9 +55,9 @@ class UserNBox {
   }
 
   //
-  Future<UserInfoProp> getUserInfo(String userName) async {
+  Future<UserInfoProp> getUserInfo(String userName, {String sign:""}) async {
     var requester = await builder.createRequester();
-    var url = "${backAddr}/api/v1/user/get?userName=${Uri.encodeComponent(userName)}";
+    var url = "${backAddr}/api/v1/user/get?userName=${Uri.encodeComponent(userName)}&sign=${Uri.encodeComponent(sign)}";
     req.Response response = await requester.request(req.Requester.TYPE_GET, url);
     if (response.status != 200) {
       throw new Exception("");

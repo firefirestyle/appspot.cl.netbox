@@ -58,9 +58,19 @@ class ArtNBox {
   //
 
   Future<String> makeBlobUrlFromKey(String key) async {
-    return "${backAddr}/api/v1/art/getblob?key=${Uri.encodeComponent(key)}";
+    return makeArtBlob(key);
   }
-
+  Future<String> makeArtBlob(String key, {String userName: "", String dir: "", String file: "", String sign: ""}) async {
+    key = key.replaceAll("key://", "");
+    return [
+      """${backAddr}/api/v1/art/getblob""", //
+      """?key=${Uri.encodeComponent(key)}""", //
+      """&userName=${Uri.encodeComponent(userName)}""",
+      """&dir=${Uri.encodeComponent(dir)}""",
+      """&file=${Uri.encodeComponent(file)}""",
+      """&sign=${Uri.encodeComponent(sign)}""",
+    ].join("");
+  }
   Future<ArtInfoProp> getArtFromStringId(String stringId) async {
     var requester = await builder.createRequester();
     var url = ["""${backAddr}/api/v1/art/get""", "?key=" + Uri.encodeComponent(stringId)].join();

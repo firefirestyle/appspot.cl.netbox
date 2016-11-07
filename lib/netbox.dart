@@ -13,6 +13,7 @@ part 'src/usernbox.dart';
 part 'src/filenbox.dart';
 part 'src/menbox.dart';
 part 'src/artnbox.dart';
+part 'src/tagnbox.dart';
 //
 //
 

@@ -12,12 +12,12 @@ class FileNBox {
   String backAddr;
   String callbackopt = "cb";
   FileNBox(this.builder, this.backAddr) {}
-/*
-  Future<String> getFromKey(String key) async {
+
+  Future<String> getBlobFromKey(String key) async {
     return "${backAddr}/api/v1/blob/get?key=${Uri.encodeComponent(key)}";
   }
 
-  Future<UploadFileProp> updateIcon(String accessToken, String dir, String name, typed.Uint8List data) async {
+  Future<UploadFileProp> updateFile(String accessToken, String dir, String name, typed.Uint8List data) async {
     String url = [
       backAddr, //
       """/api/v1/blob/requesturl""", //
@@ -43,5 +43,5 @@ class FileNBox {
     }
 
     return new UploadFileProp(new prop.MiniProp.fromByte(responseFromUploaded.response.asUint8List(), errorIsThrow: false));
-  }*/
+  }
 }

@@ -19,6 +19,7 @@ class ArtInfoProp {
   ArtInfoProp(this.prop) {}
   String get projectId => prop.getString(ArtNBox.TypeProjectId, "");
   String get userName => prop.getString(ArtNBox.TypeUserName, "");
+  String get userSign => prop.getString("userSign", "");
   String get title => prop.getString(ArtNBox.TypeTitle, "");
   List<String> get tags => prop.getPropStringList(null, ArtNBox.TypeTag, []);
   String get cont => prop.getString(ArtNBox.TypeCont, "");
@@ -75,8 +76,7 @@ class ArtNBox {
     var url = [
       """${backAddr}/api/v1/art/get""", //
       """?articleId=${Uri.encodeComponent(articleId)}""",
-      """&sign=${Uri.encodeComponent(sign)}""",
-      """&m=${mode}"""
+      """&sign=${Uri.encodeComponent(sign)}"""
     ].join();
     req.Response response = await requester.request(req.Requester.TYPE_GET, url);
     if (response.status != 200) {

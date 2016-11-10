@@ -84,11 +84,12 @@ class MeNBox {
     }
     var responsePropObj = new prop.MiniProp.fromByte(response.response.asUint8List());
     var tokenUrl = responsePropObj.getString("token", "");
+    var propName = responsePropObj.getString("name", "file");
     //new prop.MiniProp.fromByte(response.response.asUint8List());
     print(""" TokenUrl = ${tokenUrl} """);
     req.Multipart multipartObj = new req.Multipart();
     var responseFromUploaded = await multipartObj.post(await builder.createRequester(), tokenUrl, [
-      new req.MultipartItem.fromList("file", "blob", "image/png", data) //
+      new req.MultipartItem.fromList(propName, "blob", "image/png", data) //
     ]);
     if (responseFromUploaded.status != 200) {
       throw "failed to uploaded";

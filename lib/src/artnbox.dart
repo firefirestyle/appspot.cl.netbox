@@ -130,7 +130,7 @@ class ArtNBox {
   Future<ArtKeyListProp> findArticle(String cursor,{String userName:"",String  target:"",String tag:""}) async {
     var url = ["""${backAddr}/api/v1/art/find""",
     """?userName=${Uri.encodeComponent(userName)}""",
-    """&?target=${Uri.encodeComponent(target)}""",
+    """&target=${Uri.encodeComponent(target)}""",
     """&tag=${Uri.encodeComponent(tag)}"""].join("");
     var requester = await builder.createRequester();
     req.Response response = await requester.request(req.Requester.TYPE_GET, url);

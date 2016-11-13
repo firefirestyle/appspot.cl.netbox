@@ -38,7 +38,8 @@ class ArtInfoProp {
     if(index <= -1) {
       return defaultValue;
     } else {
-      return propValues[index];
+      var propObj = new prop.MiniProp.fromString(propValues[index]);
+      return propObj.getString("name", defaultValue);
     }
   }
 }

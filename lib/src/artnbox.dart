@@ -26,10 +26,21 @@ class ArtInfoProp {
   String get info => prop.getString(ArtNBox.TypeInfo, "");
   String get sign => prop.getString(ArtNBox.TypeSign, "");
   String get articleId => prop.getString(ArtNBox.TypeArticleId, "");
+  List<String> get propNames => prop.getPropStringList(null, "PropNames", []);
+  List<String> get propValues => prop.getPropStringList(null, "PropValues", []);
+
   num get created => prop.getNum(ArtNBox.TypeCreated, 0);
   num get updated => prop.getNum(ArtNBox.TypeUpdated, 0);
   String get secretKey => prop.getString(ArtNBox.TypeSecretKey, "");
   String get iconUrl => prop.getString("IconUrl", "");
+  String getProp(String name, String defaultValue) {
+    int index = propNames.indexOf(name);
+    if(index <= -1) {
+      return defaultValue;
+    } else {
+      return propValues[index];
+    }
+  }
 }
 
 class ArtNBox {

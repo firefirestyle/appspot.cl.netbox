@@ -24,13 +24,11 @@ class ArtInfoProp {
   List<String> get tags => prop.getPropStringList(null, ArtNBox.TypeTag, []);
   String get cont => prop.getString(ArtNBox.TypeCont, "");
   String get info => prop.getString(ArtNBox.TypeInfo, "");
-  String get type => prop.getString(ArtNBox.TypeType, "");
   String get sign => prop.getString(ArtNBox.TypeSign, "");
   String get articleId => prop.getString(ArtNBox.TypeArticleId, "");
   num get created => prop.getNum(ArtNBox.TypeCreated, 0);
   num get updated => prop.getNum(ArtNBox.TypeUpdated, 0);
   String get secretKey => prop.getString(ArtNBox.TypeSecretKey, "");
-  String get target => prop.getString(ArtNBox.TypeTarget, "");
   String get iconUrl => prop.getString("IconUrl", "");
 }
 

@@ -20,12 +20,23 @@ class UserInfoProp {
   int get created => prop.getNum("Created", 0);
   int get logined => prop.getNum("Logined", 0);
   String get state => prop.getString("State", "");
-  int get point => prop.getNum("Point", 0);
+  int getPoint(String name)  {
+    int index = pointName.indexOf(name);
+    if(index < 0)  {
+      return 0;
+    } else {
+      return pointValues[index];
+    }
+  }
   String get iconUrl => prop.getString("IconUrl", "");
   String get publicInfo => prop.getString("PublicInfo", "");
   String get privateInfo => prop.getString("PrivateInfo", "");
   String get sign => prop.getString("Sign", "");
   String get content => prop.getString("Cont", "");
+  List<String> get pointName => prop.getPropStringList(null, "PointNames", []);
+  List<num> get pointValues => prop.getPropNumList(null, "PointValues", []);
+  List<String> get tagNames => prop.getPropStringList(null, "TagNames", []);
+  List<String> get tagValues => prop.getPropStringList(null, "TagValues", []);
 }
 
 class UserNBox {
@@ -40,7 +51,7 @@ class UserNBox {
   }
 
   Future<String> makeUserBlobPath(String useName, String dir, String file, {String sign: ""}) async {
-    return makeUserBlob("",useName: useName,dir:dir,file: file,sign: sign);
+    return makeUserBlob("", useName: useName, dir: dir, file: file, sign: sign);
   }
 
   Future<String> makeUserBlob(String key, {String useName: "", String dir: "", String file: "", String sign: ""}) async {
@@ -55,7 +66,7 @@ class UserNBox {
   }
 
   //
-  Future<UserInfoProp> getUserInfo(String userName, {String sign:""}) async {
+  Future<UserInfoProp> getUserInfo(String userName, {String sign: ""}) async {
     var requester = await builder.createRequester();
     var url = "${backAddr}/api/v1/user/get?userName=${Uri.encodeComponent(userName)}&sign=${Uri.encodeComponent(sign)}";
     req.Response response = await requester.request(req.Requester.TYPE_GET, url);

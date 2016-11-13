@@ -4,7 +4,7 @@ import 'dart:async';
 
 import 'package:firefirestyle.httprequest/request.dart' as req;
 import 'package:firefirestyle.httprequest/request_ver_html.dart' as req;
-import 'package:firefirestyle.miniprop/miniprop.dart' as prop;
+import 'package:firefirestyle.miniprop/miniprop.dart' as pro;
 //import 'dart:convert' as conv;
 import 'dart:typed_data' as typed;
 //
@@ -18,7 +18,7 @@ part 'src/tagnbox.dart';
 //
 
 class ErrorProp {
-  prop.MiniProp prop;
+  pro.MiniProp prop;
   ErrorProp(this.prop) {}
   //"errorCode"
   //"errorMessage"

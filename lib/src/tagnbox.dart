@@ -1,7 +1,7 @@
 part of firestyle.cl.netbox;
 
 class TagAddTagProp {
-  prop.MiniProp prop;
+  pro.MiniProp prop;
   TagAddTagProp(this.prop) {}
 }
 
@@ -13,7 +13,7 @@ class TagNBox {
   Future<Object> addTag(String accessToken, String value, List<String> tags) async {
     var requester = await builder.createRequester();
     var url = "${backAddr}/api/v1/tag/add";
-    prop.MiniProp propObj = new prop.MiniProp();
+    pro.MiniProp propObj = new pro.MiniProp();
     propObj.setPropStringList(null, "tags", tags);
     propObj.setString("value", value);
     propObj.setString("token", accessToken);
@@ -21,6 +21,6 @@ class TagNBox {
     if (response.status != 200) {
       throw new Exception("");
     }
-    return new TagAddTagProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+    return new TagAddTagProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 }

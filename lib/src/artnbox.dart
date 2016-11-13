@@ -1,7 +1,7 @@
 part of firestyle.cl.netbox;
 
 class ArtKeyListProp {
-  prop.MiniProp prop;
+  pro.MiniProp prop;
   ArtKeyListProp(this.prop) {}
   List<String> get keys => this.prop.getPropStringList(null, "keys", []);
   String get cursorOne => this.prop.getPropString(null, "cursorOne", "");
@@ -9,13 +9,13 @@ class ArtKeyListProp {
 }
 
 class NewArtProp {
-  prop.MiniProp prop;
+  pro.MiniProp prop;
   NewArtProp(this.prop) {}
   String get articleId => this.prop.getString("articleId", "");
  }
 
 class ArtInfoProp {
-  prop.MiniProp prop;
+  pro.MiniProp prop;
   ArtInfoProp(this.prop) {}
   String get projectId => prop.getString(ArtNBox.TypeProjectId, "");
   String get userName => prop.getString(ArtNBox.TypeUserName, "");
@@ -38,7 +38,7 @@ class ArtInfoProp {
     if(index <= -1) {
       return defaultValue;
     } else {
-      var propObj = new prop.MiniProp.fromString(propValues[index]);
+      var propObj = new pro.MiniProp.fromString(propValues[index]);
       return propObj.getString("name", defaultValue);
     }
   }
@@ -86,9 +86,9 @@ class ArtNBox {
     var url = ["""${backAddr}/api/v1/art/get""", "?key=" + Uri.encodeComponent(stringId)].join();
     req.Response response = await requester.request(req.Requester.TYPE_GET, url);
     if (response.status != 200) {
-      throw new ErrorProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+      throw new ErrorProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
     }
-    return new ArtInfoProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+    return new ArtInfoProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
   Future<ArtInfoProp> getArtFromArticleId(String articleId, String sign, {String mode: ModeSign}) async {
@@ -100,15 +100,15 @@ class ArtNBox {
     ].join();
     req.Response response = await requester.request(req.Requester.TYPE_GET, url);
     if (response.status != 200) {
-      throw new ErrorProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+      throw new ErrorProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
     }
-    return new ArtInfoProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+    return new ArtInfoProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
   Future<NewArtProp> newArt(String accessToken, {String title: "", String cont: "", String target: "", List<String> tags}) async {
     var requester = await builder.createRequester();
     var url = ["""${backAddr}/api/v1/art/new"""].join();
-    var inputData = new prop.MiniProp();
+    var inputData = new pro.MiniProp();
     inputData.setString("title", title);
     inputData.setString("content", cont);
     inputData.setString("token", accessToken);
@@ -116,15 +116,15 @@ class ArtNBox {
     inputData.setPropStringList(null, "tags", tags);
     req.Response response = await requester.request(req.Requester.TYPE_POST, url, data: inputData.toJson());
     if (response.status != 200) {
-      throw new ErrorProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+      throw new ErrorProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
     }
-    return new NewArtProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+    return new NewArtProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
   Future<NewArtProp> updateArt(String accessToken, String articleId, {String title: "", String cont: "", List<String> tags}) async {
     var requester = await builder.createRequester();
     var url = ["""${backAddr}/api/v1/art/update"""].join();
-    var inputData = new prop.MiniProp();
+    var inputData = new pro.MiniProp();
     inputData.setString("articleId", articleId);
     inputData.setString("title", title);
     inputData.setString("content", cont);
@@ -132,9 +132,9 @@ class ArtNBox {
     inputData.setPropStringList(null, "tags", tags);
     req.Response response = await requester.request(req.Requester.TYPE_POST, url, data: inputData.toJson());
     if (response.status != 200) {
-      throw new ErrorProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+      throw new ErrorProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
     }
-    return new NewArtProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+    return new NewArtProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
   Future<ArtKeyListProp> findArticle(String cursor,{String userName:"",String  target:"",String tag:""}) async {
@@ -147,12 +147,12 @@ class ArtNBox {
     if (response.status != 200) {
       throw new Exception("");
     }
-    return new ArtKeyListProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+    return new ArtKeyListProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
   //UrlArtFindMe
   Future<ArtKeyListProp> findArticleWithToken(String token, String cursor,{String userName:"", String  target:""}) async {
     var url = "${backAddr}/api/v1/art/find_with_token";
-    var propObj = new prop.MiniProp();
+    var propObj = new pro.MiniProp();
     propObj.setString("token", token);
     propObj.setString("target", target);
     propObj.setString("userName", userName);
@@ -161,12 +161,12 @@ class ArtNBox {
     if (response.status != 200) {
       throw new Exception("");
     }
-    return new ArtKeyListProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+    return new ArtKeyListProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
   Future<ArtKeyListProp> deleteArticleWithToken(String token, String articleId) async {
     var url = "${backAddr}/api/v1/art/delete";
-    var propObj = new prop.MiniProp();
+    var propObj = new pro.MiniProp();
     propObj.setString("token", token);
     propObj.setString("articleId",articleId);
     var requester = await builder.createRequester();
@@ -174,7 +174,7 @@ class ArtNBox {
     if (response.status != 200) {
       throw new Exception("");
     }
-    return new ArtKeyListProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+    return new ArtKeyListProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
   ///api/v1/art/requestbloburl
@@ -184,7 +184,7 @@ class ArtNBox {
       """/api/v1/art/requestbloburl""",
     ].join("");
 
-    var uelPropObj = new prop.MiniProp();
+    var uelPropObj = new pro.MiniProp();
     uelPropObj.setString("token", accessToken);
     uelPropObj.setString("articleId", articleId);
     uelPropObj.setString("dir", dir);
@@ -193,7 +193,7 @@ class ArtNBox {
     if (response.status != 200) {
       throw "failed to get request token";
     }
-    var responsePropObj = new prop.MiniProp.fromByte(response.response.asUint8List());
+    var responsePropObj = new pro.MiniProp.fromByte(response.response.asUint8List());
     var tokenUrl = responsePropObj.getString("token", "");
     var propName = responsePropObj.getString("name", "file");
     print(""" TokenUrl = ${tokenUrl} """);
@@ -205,6 +205,6 @@ class ArtNBox {
       throw "failed to uploaded";
     }
 
-    return new UploadFileProp(new prop.MiniProp.fromByte(responseFromUploaded.response.asUint8List(), errorIsThrow: false));
+    return new UploadFileProp(new pro.MiniProp.fromByte(responseFromUploaded.response.asUint8List(), errorIsThrow: false));
   }
 }

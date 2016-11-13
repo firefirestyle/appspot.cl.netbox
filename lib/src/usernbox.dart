@@ -4,7 +4,7 @@ part of firestyle.cl.netbox;
 //
 
 class UserKeyListProp {
-  prop.MiniProp prop;
+  pro.MiniProp prop;
   UserKeyListProp(this.prop) {}
   List<String> get keys => this.prop.getPropStringList(null, "keys", []);
   String get cursorOne => this.prop.getString("cursorOne", "");
@@ -12,7 +12,7 @@ class UserKeyListProp {
 }
 
 class UserInfoProp {
-  prop.MiniProp prop;
+  pro.MiniProp prop;
   UserInfoProp(this.prop) {}
 
   String get displayName => prop.getString("DisplayName", "");
@@ -66,7 +66,7 @@ class UserNBox {
     if (response.status != 200) {
       throw new Exception("");
     }
-    return new UserInfoProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+    return new UserInfoProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
   Future<UserInfoProp> getUserInfoFromKey(String key) async {
@@ -76,7 +76,7 @@ class UserNBox {
     if (response.status != 200) {
       throw new Exception("");
     }
-    return new UserInfoProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+    return new UserInfoProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
   Future<UserKeyListProp> findUser(String cursor, {String group: "", String mode: ""}) async {
@@ -86,6 +86,6 @@ class UserNBox {
     if (response.status != 200) {
       throw new Exception("");
     }
-    return new UserKeyListProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+    return new UserKeyListProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 }

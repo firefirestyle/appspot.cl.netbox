@@ -1,7 +1,7 @@
 part of firestyle.cl.netbox;
 
 class UploadFileProp {
-  prop.MiniProp prop;
+  pro.MiniProp prop;
   UploadFileProp(this.prop) {}
 
   String get blobKey => prop.getString("blobkey", "");
@@ -24,13 +24,13 @@ class FileNBox {
       """?dir=${Uri.encodeComponent(dir)}&file=${Uri.encodeComponent(name)}"""
     ].join("");
 
-    var uelPropObj = new prop.MiniProp();
+    var uelPropObj = new pro.MiniProp();
     uelPropObj.setString("token", accessToken);
     req.Response response = await (await builder.createRequester()).request(req.Requester.TYPE_POST, url, data: uelPropObj.toJson(errorIsThrow: false));
     if (response.status != 200) {
       throw "failed to get request token";
     }
-    var responsePropObj = new prop.MiniProp.fromByte(response.response.asUint8List());
+    var responsePropObj = new pro.MiniProp.fromByte(response.response.asUint8List());
     var tokenUrl = responsePropObj.getString("token", "");
     var propName = responsePropObj.getString("name", "file");
     //new prop.MiniProp.fromByte(response.response.asUint8List());
@@ -43,6 +43,6 @@ class FileNBox {
       throw "failed to uploaded";
     }
 
-    return new UploadFileProp(new prop.MiniProp.fromByte(responseFromUploaded.response.asUint8List(), errorIsThrow: false));
+    return new UploadFileProp(new pro.MiniProp.fromByte(responseFromUploaded.response.asUint8List(), errorIsThrow: false));
   }
 }

@@ -1,7 +1,7 @@
 part of firestyle.cl.netbox;
 
 class LogoutProp {
-  prop.MiniProp prop;
+  pro.MiniProp prop;
   LogoutProp(this.prop) {}
 }
 
@@ -22,19 +22,19 @@ class MeNBox {
   Future<UserInfoProp> getMeInfo(String accessToken) async {
     var requester = await builder.createRequester();
     var url = "${backAddr}/api/v1/me/get";
-    var inputData = new prop.MiniProp();
+    var inputData = new pro.MiniProp();
     inputData.setString("token", accessToken);
     req.Response response = await requester.request(req.Requester.TYPE_POST, url, data: inputData.toJson(errorIsThrow: false));
     if (response.status != 200) {
       throw new Exception("");
     }
-    return new UserInfoProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+    return new UserInfoProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
   Future<UserInfoProp> updateUserInfo(String accessToken, String userName, {String displayName: "", String cont: "", List<String> tags}) async {
     var requester = await builder.createRequester();
     var url = ["""${backAddr}/api/v1/me/update"""].join();
-    var inputData = new prop.MiniProp();
+    var inputData = new pro.MiniProp();
     inputData.setString("token", accessToken);
     inputData.setString("userName", userName);
     inputData.setString("displayName", displayName);
@@ -42,22 +42,22 @@ class MeNBox {
     inputData.setPropStringList(null, "tags", tags);
     req.Response response = await requester.request(req.Requester.TYPE_POST, url, data: inputData.toJson());
     if (response.status != 200) {
-      throw new ErrorProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+      throw new ErrorProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
     }
-    return new UserInfoProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+    return new UserInfoProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
   Future<LogoutProp> logout(String token) async {
     var requester = await builder.createRequester();
     var url = "${backAddr}/api/v1/me/logout";
-    var pro = new prop.MiniProp();
-    pro.setString("token", token);
+    var prop = new pro.MiniProp();
+    prop.setString("token", token);
 
-    req.Response response = await requester.request(req.Requester.TYPE_GET, url, data: pro.toJson(errorIsThrow: false));
+    req.Response response = await requester.request(req.Requester.TYPE_GET, url, data: prop.toJson(errorIsThrow: false));
     if (response.status != 200) {
       throw new Exception("");
     }
-    return new LogoutProp(new prop.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
+    return new LogoutProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
   Future<UploadFileProp> updateIcon(String accessToken, typed.Uint8List data) async {
@@ -73,7 +73,7 @@ class MeNBox {
       """/api/v1/user/requestbloburl"""
     ].join("");
 
-    var uelPropObj = new prop.MiniProp();
+    var uelPropObj = new pro.MiniProp();
     uelPropObj.setString("token", accessToken);
     uelPropObj.setString("userName", userName);
     uelPropObj.setString("dir", dir);
@@ -82,7 +82,7 @@ class MeNBox {
     if (response.status != 200) {
       throw "failed to get request token";
     }
-    var responsePropObj = new prop.MiniProp.fromByte(response.response.asUint8List());
+    var responsePropObj = new pro.MiniProp.fromByte(response.response.asUint8List());
     var tokenUrl = responsePropObj.getString("token", "");
     var propName = responsePropObj.getString("name", "file");
     //new prop.MiniProp.fromByte(response.response.asUint8List());
@@ -95,6 +95,6 @@ class MeNBox {
       throw "failed to uploaded";
     }
 
-    return new UploadFileProp(new prop.MiniProp.fromByte(responseFromUploaded.response.asUint8List(), errorIsThrow: false));
+    return new UploadFileProp(new pro.MiniProp.fromByte(responseFromUploaded.response.asUint8List(), errorIsThrow: false));
   }
 }

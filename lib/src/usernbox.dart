@@ -21,6 +21,7 @@ class UserInfoProp {
   int get logined => prop.getNum("Logined", 0);
   String get state => prop.getString("State", "");
   num get point => prop.getNum("Point", 0);
+
   String get iconUrl => prop.getString("IconUrl", "");
   String get publicInfo => prop.getString("PublicInfo", "");
   String get privateInfo => prop.getString("PrivateInfo", "");
@@ -30,6 +31,7 @@ class UserInfoProp {
   List<num> get pointValues => prop.getPropNumList(null, "PointValues", []);
   List<String> get tagNames => prop.getPropStringList(null, "TagNames", []);
   List<String> get tagValues => prop.getPropStringList(null, "TagValues", []);
+  num get permission => prop.getNum("Permission", 0);
 }
 
 class UserNBox {

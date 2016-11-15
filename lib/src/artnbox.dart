@@ -64,7 +64,8 @@ class ArtNBox {
 
   req.NetBuilder builder;
   String backAddr;
-  ArtNBox(this.builder, this.backAddr) {}
+  String basePath;
+  ArtNBox(this.builder, this.backAddr,{this.basePath:"/api/v1/art"}) {}
   //
 
   Future<String> makeBlobUrlFromKey(String key) async {
@@ -73,7 +74,7 @@ class ArtNBox {
   Future<String> makeArtBlob(String key, {String userName: "", String dir: "", String file: "", String sign: ""}) async {
     key = key.replaceAll("key://", "");
     return [
-      """${backAddr}/api/v1/art/getblob""", //
+      """${backAddr}${this.basePath}/getblob""", //
       """?key=${Uri.encodeComponent(key)}""", //
       """&userName=${Uri.encodeComponent(userName)}""",
       """&dir=${Uri.encodeComponent(dir)}""",
@@ -83,7 +84,7 @@ class ArtNBox {
   }
   Future<ArtInfoProp> getArtFromStringId(String stringId) async {
     var requester = await builder.createRequester();
-    var url = ["""${backAddr}/api/v1/art/get""", "?key=" + Uri.encodeComponent(stringId)].join();
+    var url = ["""${backAddr}${this.basePath}/get""", "?key=" + Uri.encodeComponent(stringId)].join();
     req.Response response = await requester.request(req.Requester.TYPE_GET, url);
     if (response.status != 200) {
       throw new ErrorProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
@@ -94,7 +95,7 @@ class ArtNBox {
   Future<ArtInfoProp> getArtFromArticleId(String articleId, String sign, {String mode: ModeSign}) async {
     var requester = await builder.createRequester();
     var url = [
-      """${backAddr}/api/v1/art/get""", //
+      """${backAddr}${this.basePath}/get""", //
       """?articleId=${Uri.encodeComponent(articleId)}""",
       """&sign=${Uri.encodeComponent(sign)}"""
     ].join();
@@ -107,7 +108,7 @@ class ArtNBox {
 
   Future<NewArtProp> newArt(String accessToken, {String title: "", String cont: "", String target: "", List<String> tags}) async {
     var requester = await builder.createRequester();
-    var url = ["""${backAddr}/api/v1/art/new"""].join();
+    var url = ["""${backAddr}${this.basePath}/new"""].join();
     var inputData = new pro.MiniProp();
     inputData.setString("title", title);
     inputData.setString("content", cont);
@@ -123,7 +124,7 @@ class ArtNBox {
 
   Future<NewArtProp> updateArt(String accessToken, String articleId, {String title: "", String cont: "", List<String> tags}) async {
     var requester = await builder.createRequester();
-    var url = ["""${backAddr}/api/v1/art/update"""].join();
+    var url = ["""${backAddr}${this.basePath}/update"""].join();
     var inputData = new pro.MiniProp();
     inputData.setString("articleId", articleId);
     inputData.setString("title", title);
@@ -138,7 +139,7 @@ class ArtNBox {
   }
 
   Future<ArtKeyListProp> findArticle(String cursor,{String userName:"",String  target:"",String tag:""}) async {
-    var url = ["""${backAddr}/api/v1/art/find""",
+    var url = ["""${backAddr}${this.basePath}/find""",
     """?userName=${Uri.encodeComponent(userName)}""",
     """&target=${Uri.encodeComponent(target)}""",
     """&tag=${Uri.encodeComponent(tag)}"""].join("");
@@ -151,7 +152,7 @@ class ArtNBox {
   }
   //UrlArtFindMe
   Future<ArtKeyListProp> findArticleWithToken(String token, String cursor,{String userName:"", String  target:""}) async {
-    var url = "${backAddr}/api/v1/art/find_with_token";
+    var url = "${backAddr}${this.basePath}/find_with_token";
     var propObj = new pro.MiniProp();
     propObj.setString("token", token);
     propObj.setString("target", target);
@@ -165,7 +166,7 @@ class ArtNBox {
   }
 
   Future<ArtKeyListProp> deleteArticleWithToken(String token, String articleId) async {
-    var url = "${backAddr}/api/v1/art/delete";
+    var url = "${backAddr}${this.basePath}/delete";
     var propObj = new pro.MiniProp();
     propObj.setString("token", token);
     propObj.setString("articleId",articleId);
@@ -181,7 +182,7 @@ class ArtNBox {
   Future<UploadFileProp> updateFile(String accessToken, String articleId, String dir, String name, typed.Uint8List data) async {
     String url = [
       backAddr, //
-      """/api/v1/art/requestbloburl""",
+      """${this.basePath}/requestbloburl""",
     ].join("");
 
     var uelPropObj = new pro.MiniProp();

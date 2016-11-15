@@ -106,7 +106,7 @@ class ArtNBox {
     return new ArtInfoProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
-  Future<NewArtProp> newArt(String accessToken, {String title: "", String cont: "", String target: "", List<String> tags}) async {
+  Future<NewArtProp> newArt(String accessToken, {String articleId:"", String title: "", String cont: "", String target: "", List<String> tags}) async {
     var requester = await builder.createRequester();
     var url = ["""${backAddr}${this.basePath}/new"""].join();
     var inputData = new pro.MiniProp();
@@ -114,6 +114,8 @@ class ArtNBox {
     inputData.setString("content", cont);
     inputData.setString("token", accessToken);
     inputData.setString("target", target);
+    inputData.setString("articleId", articleId);
+
     inputData.setPropStringList(null, "tags", tags);
     req.Response response = await requester.request(req.Requester.TYPE_POST, url, data: inputData.toJson());
     if (response.status != 200) {

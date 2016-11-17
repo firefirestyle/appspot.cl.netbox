@@ -31,6 +31,8 @@ class ArtInfoProp {
 
   num get created => prop.getNum(ArtNBox.TypeCreated, 0);
   num get updated => prop.getNum(ArtNBox.TypeUpdated, 0);
+  num get lat => prop.getNum("Lat", 0);
+  num get lng => prop.getNum("Lng", 0);
   String get secretKey => prop.getString(ArtNBox.TypeSecretKey, "");
   String get iconUrl => prop.getString("IconUrl", "");
   String getProp(String name, String defaultValue) {

@@ -12,11 +12,21 @@ class NewArtProp {
   pro.MiniProp prop;
   NewArtProp(this.prop) {}
   String get articleId => this.prop.getString("articleId", "");
- }
+}
 
 class ArtInfoProp {
   pro.MiniProp prop;
-  ArtInfoProp(this.prop) {}
+
+  ArtInfoProp(this.prop) {
+    if (this.prop == null) {
+      this.prop = new pro.MiniProp();
+    }
+  }
+
+  factory ArtInfoProp.empty() {
+    return new ArtInfoProp(null);
+  }
+
   String get projectId => prop.getString(ArtNBox.TypeProjectId, "");
   String get userName => prop.getString(ArtNBox.TypeUserName, "");
   String get userSign => prop.getString("userSign", "");
@@ -37,7 +47,7 @@ class ArtInfoProp {
   String get iconUrl => prop.getString("IconUrl", "");
   String getProp(String name, String defaultValue) {
     int index = propNames.indexOf(name);
-    if(index <= -1) {
+    if (index <= -1) {
       return defaultValue;
     } else {
       var propObj = new pro.MiniProp.fromString(propValues[index]);
@@ -67,12 +77,13 @@ class ArtNBox {
   req.NetBuilder builder;
   String backAddr;
   String basePath;
-  ArtNBox(this.builder, this.backAddr,{this.basePath:"/api/v1/art"}) {}
+  ArtNBox(this.builder, this.backAddr, {this.basePath: "/api/v1/art"}) {}
   //
 
   Future<String> makeBlobUrlFromKey(String key) async {
     return makeArtBlob(key);
   }
+
   Future<String> makeArtBlob(String key, {String userName: "", String dir: "", String file: "", String sign: ""}) async {
     key = key.replaceAll("key://", "");
     return [
@@ -84,6 +95,7 @@ class ArtNBox {
       """&sign=${Uri.encodeComponent(sign)}""",
     ].join("");
   }
+
   Future<ArtInfoProp> getArtFromStringId(String stringId) async {
     var requester = await builder.createRequester();
     var url = ["""${backAddr}${this.basePath}/get""", "?key=" + Uri.encodeComponent(stringId)].join();
@@ -108,7 +120,7 @@ class ArtNBox {
     return new ArtInfoProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
-  Future<NewArtProp> newArt(String accessToken, {String articleId:"", String title: "", String cont: "", String target: "", List<String> tags}) async {
+  Future<NewArtProp> newArt(String accessToken, {String articleId: "", String title: "", String cont: "", String target: "", List<String> tags}) async {
     var requester = await builder.createRequester();
     var url = ["""${backAddr}${this.basePath}/new"""].join();
     var inputData = new pro.MiniProp();
@@ -142,11 +154,8 @@ class ArtNBox {
     return new NewArtProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
-  Future<ArtKeyListProp> findArticle(String cursor,{String userName:"",String  target:"",String tag:""}) async {
-    var url = ["""${backAddr}${this.basePath}/find""",
-    """?userName=${Uri.encodeComponent(userName)}""",
-    """&target=${Uri.encodeComponent(target)}""",
-    """&tag=${Uri.encodeComponent(tag)}"""].join("");
+  Future<ArtKeyListProp> findArticle(String cursor, {String userName: "", String target: "", String tag: ""}) async {
+    var url = ["""${backAddr}${this.basePath}/find""", """?userName=${Uri.encodeComponent(userName)}""", """&target=${Uri.encodeComponent(target)}""", """&tag=${Uri.encodeComponent(tag)}"""].join("");
     var requester = await builder.createRequester();
     req.Response response = await requester.request(req.Requester.TYPE_GET, url);
     if (response.status != 200) {
@@ -154,15 +163,16 @@ class ArtNBox {
     }
     return new ArtKeyListProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
+
   //UrlArtFindMe
-  Future<ArtKeyListProp> findArticleWithToken(String token, String cursor,{String userName:"", String  target:""}) async {
+  Future<ArtKeyListProp> findArticleWithToken(String token, String cursor, {String userName: "", String target: ""}) async {
     var url = "${backAddr}${this.basePath}/find_with_token";
     var propObj = new pro.MiniProp();
     propObj.setString("token", token);
     propObj.setString("target", target);
     propObj.setString("userName", userName);
     var requester = await builder.createRequester();
-    req.Response response = await requester.request(req.Requester.TYPE_POST, url,data: propObj.toJson());
+    req.Response response = await requester.request(req.Requester.TYPE_POST, url, data: propObj.toJson());
     if (response.status != 200) {
       throw new Exception("");
     }
@@ -173,9 +183,9 @@ class ArtNBox {
     var url = "${backAddr}${this.basePath}/delete";
     var propObj = new pro.MiniProp();
     propObj.setString("token", token);
-    propObj.setString("articleId",articleId);
+    propObj.setString("articleId", articleId);
     var requester = await builder.createRequester();
-    req.Response response = await requester.request(req.Requester.TYPE_POST, url,data: propObj.toJson());
+    req.Response response = await requester.request(req.Requester.TYPE_POST, url, data: propObj.toJson());
     if (response.status != 200) {
       throw new Exception("");
     }

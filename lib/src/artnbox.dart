@@ -224,7 +224,7 @@ class ArtNBox {
       urls.add("""&p-${Uri.encodeComponent(k)}=${Uri.encodeComponent(props[k])}""");
     }
     //
-    for (int i = 1; i < tags.length; i++) {
+    for (int i = 0; i < tags.length; i++) {
       urls.add("&t-${i}=${Uri.encodeComponent(tags[i])}");
     }
     //

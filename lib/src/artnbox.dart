@@ -196,8 +196,21 @@ class ArtNBox {
     return new NewArtProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
-  Future<ArtKeyListProp> findArticle(String cursor, {String userName: "", String target: "", String tag: ""}) async {
-    var url = ["""${backAddr}${this.basePath}/find""", """?userName=${Uri.encodeComponent(userName)}""", """&target=${Uri.encodeComponent(target)}""", """&tag=${Uri.encodeComponent(tag)}"""].join("");
+  Future<ArtKeyListProp> findArticle(String cursor, {String userName: "", Map<String,String> props: const{}, List<String> tags: const[]}) async {
+    var urls = ["""${backAddr}${this.basePath}/find?cursor=${Uri.encodeComponent(cursor)}"""];
+    if(userName != "" && userName != null) {
+      urls.add("""&userNam=${Uri.encodeComponent(userName)}""");
+    }
+    //
+    for(String k in props.keys) {
+      urls.add("""&p-${Uri.encodeComponent(k)}=${Uri.encodeComponent(props[k])}""");
+    }
+    //
+    for(int i=1;i<tags.length;i++) {
+      urls.add("&t-${i}=${Uri.encodeComponent(tags[i])}");
+    }
+    //
+    var url = urls.join("");
     var requester = await builder.createRequester();
     req.Response response = await requester.request(req.Requester.TYPE_GET, url);
     if (response.status != 200) {

@@ -4,6 +4,14 @@ class ArtKeyListProp {
   pro.MiniProp prop;
   ArtKeyListProp(this.prop) {}
   List<String> get keys => this.prop.getPropStringList(null, "keys", []);
+  List<ArtInfoKey> get keyObjs {
+    List<ArtInfoKey> ret = [];
+    for (String k in keys) {
+      ret.add(new ArtInfoKey(k));
+    }
+    return ret;
+  }
+
   String get cursorOne => this.prop.getPropString(null, "cursorOne", "");
   String get cursorNext => this.prop.getPropString(null, "cursorNext", "");
 }
@@ -12,6 +20,16 @@ class NewArtProp {
   pro.MiniProp prop;
   NewArtProp(this.prop) {}
   String get articleId => this.prop.getString("articleId", "");
+}
+
+class ArtInfoKey {
+  String key;
+  pro.MiniProp prop;
+  ArtInfoKey(this.key) {
+    prop = new pro.MiniProp.fromString(this.key);
+  }
+  String get articleId => prop.getString("i", "");
+  String get sign => prop.getString("s", "");
 }
 
 class ArtInfoProp {
@@ -196,17 +214,17 @@ class ArtNBox {
     return new NewArtProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
-  Future<ArtKeyListProp> findArticle(String cursor, {String userName: "", Map<String,String> props: const{}, List<String> tags: const[]}) async {
+  Future<ArtKeyListProp> findArticle(String cursor, {String userName: "", Map<String, String> props: const {}, List<String> tags: const []}) async {
     var urls = ["""${backAddr}${this.basePath}/find?cursor=${Uri.encodeComponent(cursor)}"""];
-    if(userName != "" && userName != null) {
+    if (userName != "" && userName != null) {
       urls.add("""&userNam=${Uri.encodeComponent(userName)}""");
     }
     //
-    for(String k in props.keys) {
+    for (String k in props.keys) {
       urls.add("""&p-${Uri.encodeComponent(k)}=${Uri.encodeComponent(props[k])}""");
     }
     //
-    for(int i=1;i<tags.length;i++) {
+    for (int i = 1; i < tags.length; i++) {
       urls.add("&t-${i}=${Uri.encodeComponent(tags[i])}");
     }
     //

@@ -124,11 +124,12 @@ class ArtNBox {
       {String articleId: "", //
       String title: "",
       String cont: "",
+      String info: "",
       String target: "",
       List<String> tags,
-      int lat:0,
-      int lng:0,
-      Map<String,String> props:const {}}) async {
+      int lat: 0,
+      int lng: 0,
+      Map<String, String> props: const {}}) async {
     var requester = await builder.createRequester();
     var url = ["""${backAddr}${this.basePath}/new"""].join();
     var inputData = new pro.MiniProp();
@@ -137,13 +138,14 @@ class ArtNBox {
     inputData.setString("token", accessToken);
     inputData.setString("target", target);
     inputData.setString("articleId", articleId);
+    inputData.setString("info", info);
     inputData.setNum("lat", lat);
     inputData.setNum("lng", lng);
     inputData.setPropStringList(null, "tags", tags);
     {
       List<String> keys = [];
       List<String> values = [];
-      for(var  k in props.keys) {
+      for (var k in props.keys) {
         keys.add(k);
         values.add(props[k]);
       }
@@ -157,29 +159,30 @@ class ArtNBox {
     return new NewArtProp(new pro.MiniProp.fromByte(response.response.asUint8List(), errorIsThrow: false));
   }
 
-  Future<NewArtProp> updateArt(String accessToken, String articleId, {
-    String title: "",
-    String cont: "",
-    String target: "",
-    List<String> tags,
-    int lat:0,
-    int lng:0,
-    Map<String,String> props:const {}}) async {
+  Future<NewArtProp> updateArt(String accessToken, String articleId,
+      { //
+      String title: "",
+      String cont: "",
+      String info: "",
+      List<String> tags,
+      int lat: 0,
+      int lng: 0,
+      Map<String, String> props: const {}}) async {
     var requester = await builder.createRequester();
     var url = ["""${backAddr}${this.basePath}/update"""].join();
     var inputData = new pro.MiniProp();
     inputData.setString("title", title);
     inputData.setString("content", cont);
     inputData.setString("token", accessToken);
-    inputData.setString("target", target);
     inputData.setString("articleId", articleId);
+    inputData.setString("info", info);
     inputData.setNum("lat", lat);
     inputData.setNum("lng", lng);
     inputData.setPropStringList(null, "tags", tags);
     {
       List<String> keys = [];
       List<String> values = [];
-      for(var  k in props.keys) {
+      for (var k in props.keys) {
         keys.add(k);
         values.add(props[k]);
       }

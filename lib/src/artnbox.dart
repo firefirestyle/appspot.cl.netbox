@@ -167,8 +167,8 @@ class ArtNBox {
         keys.add(k);
         values.add(props[k]);
       }
-      inputData.setPropStringList(null, "propKey", keys);
-      inputData.setPropStringList(null, "propValue", values);
+      inputData.setPropStringList(null, "propKeys", keys);
+      inputData.setPropStringList(null, "propValues", values);
     }
     req.Response response = await requester.request(req.Requester.TYPE_POST, url, data: inputData.toJson());
     if (response.status != 200) {
@@ -204,8 +204,8 @@ class ArtNBox {
         keys.add(k);
         values.add(props[k]);
       }
-      inputData.setPropStringList(null, "propKey", keys);
-      inputData.setPropStringList(null, "propValue", values);
+      inputData.setPropStringList(null, "propKeys", keys);
+      inputData.setPropStringList(null, "propValues", values);
     }
     req.Response response = await requester.request(req.Requester.TYPE_POST, url, data: inputData.toJson());
     if (response.status != 200) {

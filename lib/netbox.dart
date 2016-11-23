@@ -3,7 +3,7 @@ library firestyle.cl.netbox;
 import 'dart:async';
 
 import 'package:firefirestyle.httprequest/request.dart' as req;
-import 'package:firefirestyle.httprequest/request_ver_html.dart' as req;
+//import 'package:firefirestyle.httprequest/request_html.dart' as req;
 import 'package:firefirestyle.miniprop/miniprop.dart' as pro;
 //import 'dart:convert' as conv;
 import 'dart:typed_data' as typed;

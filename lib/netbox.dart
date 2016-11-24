@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:firefirestyle.httprequest/request.dart' as req;
 //import 'package:firefirestyle.httprequest/request_html.dart' as req;
 import 'package:firefirestyle.miniprop/miniprop.dart' as pro;
+//import 'package:firefirestyle.location/location.dart' as loc;
 //import 'dart:convert' as conv;
 import 'dart:typed_data' as typed;
 //

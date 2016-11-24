@@ -10,3 +10,7 @@ dependencies:
  firefirestyle.miniprop:
    git:
      url: https://github.com/firefirestyle/dart.miniprop.git
+# firefirestyle.location:
+#   git:
+#     url: https://github.com/firefirestyle/dart.location.git
+#

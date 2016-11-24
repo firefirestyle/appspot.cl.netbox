@@ -18,7 +18,7 @@ class OAuthLoginHelper {
 
   OAuthLoginHelper(this.type, this.backAddr, {this.host: "localhost", this.port: 8085}) {}
 
-  login({int timeoutSec: 180}) async {
+  Future<MeNBoxLoginCB> login({int timeoutSec: 180}) async {
     IONetBuilder builder = new IONetBuilder();
     MeNBox mebox = new MeNBox(builder, backAddr);
     Completer completer = new Completer();
@@ -41,7 +41,7 @@ class OAuthLoginHelper {
       if (request.uri.path == "/auth") {
         print("<<query param>> ${request.uri.queryParameters}");
         closeInner();//isMaster: 255, token: PuUrsNSqX0CyVoLVB21D33KJBcY=SS50kQpUdqnC/NNNvDE/4eFRU58=SkM1VDZZRVhD, userName: JC5T6YEXC}
-        completer.complete();
+        completer.complete(mebox.getInfoFromLoginCallback(request.uri.toString()));
       }
     });
     //

@@ -5,6 +5,13 @@ class LogoutProp {
   LogoutProp(this.prop) {}
 }
 
+class MeNBoxLoginCB {
+  int permission;
+  String token;
+  String userName;
+  String error;
+}
+
 class MeNBox {
   req.NetBuilder builder;
   String backAddr;
@@ -17,6 +24,21 @@ class MeNBox {
 
   String makeLoginFacebookUrl(String callbackAddr) {
     return """${backAddr}/api/v1/facebook/tokenurl/redirect?${callbackopt}=${Uri.encodeComponent(callbackAddr)}""";
+  }
+
+  MeNBoxLoginCB getInfoFromLoginCallback(String url) {
+    Uri urlObj = Uri.parse(url);
+    var ret = new MeNBoxLoginCB();
+    ret.token = urlObj.queryParameters["token"];
+    ret.token = (ret.token == null ? "" : ret.token);
+    ret.userName = urlObj.queryParameters["userName"];
+    ret.userName = (ret.userName == null ? "" : ret.userName);
+    ret.error = urlObj.queryParameters["error"];
+    ret.error = (ret.error == null ? "" : ret.error);
+    ret.permission = int.parse(urlObj.queryParameters["isMaster"], onError: (v) {
+      return 0;
+    });
+    return ret;
   }
 
   Future<UserInfoProp> getMeInfo(String accessToken) async {

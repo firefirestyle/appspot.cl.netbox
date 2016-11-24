@@ -10,7 +10,11 @@ main(List<String> args) async {
   String backAddr = args[0];
   OAuthLoginHelper helper = new OAuthLoginHelper(OAuthLoginHelperType.twitter,backAddr);
   print("start");
-  await helper.login();
+  MeNBoxLoginCB cbinfo = await helper.login();
+  print("a : ${cbinfo.permission}");
+  print("b : ${cbinfo.token}");
+  print("c : ${cbinfo.userName}");
+  print("d : ${cbinfo.error}");
   print("end");
 
 }

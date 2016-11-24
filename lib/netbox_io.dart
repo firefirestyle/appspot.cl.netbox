@@ -21,7 +21,7 @@ class OAuthLoginHelper {
   Future<MeNBoxLoginCB> login({int timeoutSec: 180}) async {
     IONetBuilder builder = new IONetBuilder();
     MeNBox mebox = new MeNBox(builder, backAddr);
-    Completer completer = new Completer();
+    Completer<MeNBoxLoginCB> completer = new Completer<MeNBoxLoginCB>();
     //
     Process process = null;
     HttpServer server = null;
@@ -40,15 +40,20 @@ class OAuthLoginHelper {
       print("<<uri>> ${request.uri.toString()}");
       if (request.uri.path == "/auth") {
         print("<<query param>> ${request.uri.queryParameters}");
-        closeInner();//isMaster: 255, token: PuUrsNSqX0CyVoLVB21D33KJBcY=SS50kQpUdqnC/NNNvDE/4eFRU58=SkM1VDZZRVhD, userName: JC5T6YEXC}
-        completer.complete(mebox.getInfoFromLoginCallback(request.uri.toString()));
+        closeInner(); //isMaster: 255, token: PuUrsNSqX0CyVoLVB21D33KJBcY=SS50kQpUdqnC/NNNvDE/4eFRU58=SkM1VDZZRVhD, userName: JC5T6YEXC}
+        if (completer.isCompleted == false) {
+          completer.complete(mebox.getInfoFromLoginCallback(request.uri.toString()));
+        }
       }
     });
     //
     //
     new Future.delayed(new Duration(seconds: timeoutSec)).then((v) {
       closeInner();
-      completer.completeError("timeout");
+      if (completer.isCompleted == false) {
+        print("====> AAAAAA");
+        completer.completeError("timeout");
+      }
     });
     //
     String oauthUrl = "";
@@ -60,7 +65,7 @@ class OAuthLoginHelper {
     process = await runBrowser(oauthUrl);
     //
 
-    completer.future;
+    return completer.future;
   }
 
   Future<Process> runBrowser(String url) async {

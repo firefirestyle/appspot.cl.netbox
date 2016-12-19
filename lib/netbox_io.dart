@@ -37,9 +37,9 @@ class OAuthLoginHelper {
     }
     server = await HttpServer.bind(host, port);
     server.listen((HttpRequest request) {
-      print("<<uri>> ${request.uri.toString()}");
+      // print("<<uri>> ${request.uri.toString()}");
       if (request.uri.path == "/auth") {
-        print("<<query param>> ${request.uri.queryParameters}");
+        // print("<<query param>> ${request.uri.queryParameters}");
         closeInner(); //isMaster: 255, token: PuUrsNSqX0CyVoLVB21D33KJBcY=SS50kQpUdqnC/NNNvDE/4eFRU58=SkM1VDZZRVhD, userName: JC5T6YEXC}
         if (completer.isCompleted == false) {
           completer.complete(mebox.getInfoFromLoginCallback(request.uri.toString()));
@@ -51,7 +51,7 @@ class OAuthLoginHelper {
     new Future.delayed(new Duration(seconds: timeoutSec)).then((v) {
       closeInner();
       if (completer.isCompleted == false) {
-        print("====> AAAAAA");
+        //print("====> AAAAAA");
         completer.completeError("timeout");
       }
     });

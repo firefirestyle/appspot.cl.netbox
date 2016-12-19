@@ -58,9 +58,9 @@ class OAuthLoginHelper {
     //
     String oauthUrl = "";
     if (type == OAuthLoginHelperType.twitter) {
-      oauthUrl = mebox.makeLoginTwitterUrl("http://localhost:8085/auth");
+      oauthUrl = mebox.makeLoginTwitterUrl("http://localhost:${port}/auth");
     } else {
-      oauthUrl = mebox.makeLoginFacebookUrl("http://localhost:8085/auth");
+      oauthUrl = mebox.makeLoginFacebookUrl("http://localhost:${port}/auth");
     }
     process = await runBrowser(oauthUrl);
     //
